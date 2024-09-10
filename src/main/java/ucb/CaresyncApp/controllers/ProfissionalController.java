@@ -33,7 +33,7 @@ public class ProfissionalController {
     }
 
     @PostMapping("/criar")
-    public String criarProfissional(@ModelAttribute("contrato") Profissional profissional) {
+    public String criarProfissional(@ModelAttribute("profissional") Profissional profissional) {
         repository.save(profissional);
         return "redirect:/profissional/listar";
     }
