@@ -10,7 +10,7 @@
     <body>
         <div th:replace="~{fragments/header :: header}"></div>
         <div class="container">
-            <a th:href="@{listar}" class="btn btn-outline-primary  mb-3">Voltar</a>
+            <a th:href="@{/profissional/listar}" class="btn btn-outline-primary  mb-3">Voltar</a>
             <h2>Editar profissional</h2>
 
             <form th:action="@{/profissional/editar}" th:object="${profissional}" method="POST" class="col-sm-4">
