@@ -10,16 +10,25 @@
         <div th:replace="~{fragments/header :: header}"></div>
         <div class="d-flex align-items-center flex-column">
             <h2>Login</h2>
+            <div th:if="${param.logout}" class="alert alert-success">
+                Você foi deslogado.
+            </div>
+            <div th:if="${param.error}" class="alert alert-danger">
+                Usuário ou senha incorretos.
+            </div>
+            <div th:if="${param.cadastro}" class="alert alert-success">
+                Cadastrado com sucesso.
+            </div>
             <form th:action="@{/login}" method="POST" class="col-sm-4">
                 <div class="mb-3">
-                    <label for="username"><strong>Nome de usuário</strong></label>
+                    <label for="username"><strong>Email</strong></label>
                     <input
                             class="form-control"
                             th:maxlength="100"
                             type="text"
                             id="username"
                             name="username"
-                            required placeholder="Digite o nome">
+                            required placeholder="Digite o email">
                 </div>
                 <div class="mb-3">
                     <label for="password"><strong>Senha</strong></label>
@@ -31,7 +40,10 @@
                             name="password"
                             required placeholder="Digite a senha">
                 </div>
-                <button type="submit" class="btn btn-primary">Logar</button>
+                <div class="d-flex justify-content-around">
+                    <button type="submit" value="Log in" class="btn btn-primary">Logar</button>
+                    <span>Não tem uma conta? <a th:href="@{/cadastro}" class="text-decoration-underline">Cadastre-se</a></span>
+                </div>
             </form>
         </div>
     </body>

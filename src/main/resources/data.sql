@@ -1,4 +1,6 @@
-INSERT INTO tb_profissionais (nome, email, numero_registro, cargo)VALUES ('Fernando Siqueira', 'fernandosiq@gmail.com', 'CRM-DF 123456', 'Médico');
+INSERT INTO  tb_usuarios (nome, email, password) VALUES ('Tiago Moura', 'tst@tst', '$2a$12$jcTFIrGniFF3Gbz2njWwjeabDj8/oGXAmyDyiK8Nz7MTRm1ZBUGg6');
+
+INSERT INTO tb_profissionais (nome, email, numero_registro, cargo) VALUES ('Fernando Siqueira', 'fernandosiq@gmail.com', 'CRM-DF 123456', 'Médico');
 INSERT INTO tb_profissionais (nome, email, numero_registro, cargo) VALUES ('Carlos Almeida', 'carlos.almeida@gmail.com', 'CRM-RJ 234567', 'Médico');
 INSERT INTO tb_profissionais (nome, email, numero_registro, cargo) VALUES ('Beatriz Costa', 'beatriz.costa@gmail.com', 'CRM-MG 345678', 'Médico');
 INSERT INTO tb_profissionais (nome, email, numero_registro, cargo) VALUES ('Mariana Silva', 'mariana.silva@gmail.com', 'COREN-SP 789012', 'Enfermeiro');
@@ -17,3 +19,4 @@ INSERT INTO tb_pacientes (nome, email, CPF) VALUES ('Camila Souza', 'camila.souz
 INSERT INTO tb_pacientes (nome, email, CPF) VALUES ('Felipe Costa', 'felipe.costa@yahoo.com', '321.456.789-89');
 INSERT INTO tb_pacientes (nome, email, CPF) VALUES ('Patricia Santos', 'patricia.santos@outlook.com', '654.789.123-90');
 INSERT INTO tb_pacientes (nome, email, CPF) VALUES ('Eduardo Lima', 'eduardo.lima@gmail.com', '987.654.321-12');
+
