@@ -7,4 +7,9 @@ import { Component } from '@angular/core';
 })
 export class LoginComponent {
 
+  isHidden = true;
+
+  visibilidadePassword() {
+    this.isHidden = !this.isHidden;
+  }
 }

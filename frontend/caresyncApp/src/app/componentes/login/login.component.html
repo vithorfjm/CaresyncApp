@@ -1,2 +1,15 @@
-<p>login works!</p>
-<mat-slide-toggle>Toggle me!</mat-slide-toggle>
+<div class="container">
+    <h1 class="titulo">Login</h1>
+    <mat-form-field appearance="outline">
+        <mat-label>Digite seu login</mat-label>
+        <input matInput>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+        <mat-label>Digite sua senha</mat-label>
+        <input matInput [type]="isHidden ? 'password' : 'text'" />
+        <button mat-icon-button matSuffix (click)="visibilidadePassword()">
+          <mat-icon>{{ isHidden ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+      </mat-form-field>
+      <mat-slide-toggle>Toggle me!</mat-slide-toggle>
+</div>
