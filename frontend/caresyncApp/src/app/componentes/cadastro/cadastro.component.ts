@@ -5,6 +5,5 @@ import { Component } from '@angular/core';
   templateUrl: './cadastro.component.html',
   styleUrl: '../auth-container/auth-container.component.css'
 })
-export class CadastroComponent {
+export class CadastroComponent {}
 
-}

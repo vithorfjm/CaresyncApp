@@ -2,35 +2,63 @@
   <div class="auth-section">
     <div class="auth-itens">
       <div class="header">
-        <h1 class="titulo">CADASTRO</h1>
+        <h1 class="titulo cadastro">CADASTRO</h1>
       </div>
       <div class="labels">
         <div class="input-container">
-          <input type="mail" required="" />
+          <input type="text" required="" />
           <label>Nome Completo</label>
         </div>
-        <div class="input-container">
-          <input type="date" required="" />
-          <label>Data de Nasc.</label>
+        <div class="double-information">
+          <div class="input-container share">
+            <input type="date" required="" />
+            <label>Data de Nasc.</label>
+          </div>
+          <div class="input-container share">
+            <select name="sexo" id="">
+              <option value="">SELECIONE</option>
+              <option value="M">MASCULINO</option>
+              <option value="F">FEMININO</option>
+            </select>
+            <label for="sexo">SEXO</label>
+          </div>
+        </div>
+        <div class="double-information">
+          <div class="input-container share">
+            <input
+              type="text"
+              required=""
+            />
+            <label>CPF</label>
+          </div>
+          <div class="input-container share">
+            <input type="text" required="" />
+            <label>RG</label>
+          </div>
         </div>
         <div class="input-container">
-          <label for="sexo">Sexo</label>
-          <select name="sexo">
-            <option value="M">Masculino</option>
-            <option value="F">Feminino</option>
-          </select>
+          <input type="text" required="" />
+          <label>ENDEREÇO</label>
         </div>
-        <br />
+        <div class="double-information">
+          <div class="input-container share">
+            <input type="text" required="" />
+            <label>TELEFONE</label>
+          </div>
+          <div class="input-container share">
+            <input type="text" required="" />
+            <label>E-MAIL</label>
+          </div>
+        </div>
         <div class="input-container">
           <input type="password" required="" />
-          <label>TESTE</label>
+          <label>SENHA</label>
         </div>
-        <button class="submit-button">CADASTRAR</button>
-        <div class="link-container">
-          <a href="#" class="link">Esqueci a senha</a>
-          <span class="separator">|</span>
-          <a href="#" class="link" routerLink="/cadastro">Não tenho uma conta</a>
+        <div class="input-container">
+          <input type="password" required="" />
+          <label>CONFIRMAR SENHA</label>
         </div>
+        <button class="submit-button register">CADASTRAR</button>
       </div>
     </div>
   </div>

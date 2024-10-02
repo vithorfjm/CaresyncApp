@@ -80,14 +80,19 @@
 .titulo {
   font-size: 75px;
   margin: auto;
-  margin-top: 20px;
-  color: #26606B;
+  margin-top: 0;
+  color: #26606b;
+}
+
+.cadastro{
+  font-size: 60px;
+  margin-top: 0;
 }
 
 .logo-text {
   margin-top: 20px;
   font-size: 18px;
-  color: #26606B;
+  color: #26606b;
 }
 
 .auth-itens {
@@ -104,7 +109,7 @@
 
 .input-container {
   position: relative;
-  margin-top: 25px;
+  margin-top: 15px;
 }
 
 .input-container label {
@@ -112,19 +117,19 @@
   top: 0;
   left: 0;
   font-size: 20px;
-  color: #26606B;
+  color: #26606b;
   pointer-events: none;
   transition: all 0.5s ease-in-out;
 }
 
 .input-container input {
   border: 0;
-  border-bottom: 1px solid #26606B;
+  border-bottom: 1px solid #26606b;
   background: transparent;
   width: 100%;
   padding: 8px 0 5px 0;
   font-size: 16px;
-  color: #26606B;
+  color: #26606b;
 }
 
 .input-container input:focus {
@@ -138,33 +143,8 @@
   font-size: 12px;
 }
 
-.input-container select {
-  border: 0;
-  border-bottom: 1px solid #26606B;
-  background: transparent;
-  width: 100%;
-  padding: 8px 0 5px 0;
-  font-size: 16px;
-  color: #26606B;
-  appearance: none; /* Remove a seta padrão dos browsers */
-  -webkit-appearance: none;
-  -moz-appearance: none;
-}
-
-.input-container select:focus {
-  outline: none;
-  border-bottom: 1px solid #00be75;
-}
-
-.input-container select:focus ~ label,
-.input-container select:valid ~ label {
-  top: -12px;
-  font-size: 12px;
-}
-
-
 .submit-button {
-  background-color: #26606B;
+  background-color: #26606b;
   color: white;
   border: none;
   border-radius: 15px;
@@ -173,9 +153,12 @@
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.3s ease;
   width: 40%;
-  margin: 100px auto 20px;
+  margin: 100px auto 30px;
 }
 
+.register{
+  margin: 30px auto 5px;
+}
 .submit-button:hover {
   background-color: #4ab68a;
   transform: scale(1.05);
@@ -191,7 +174,7 @@
 }
 
 .link {
-  color: #26606B;
+  color: #26606b;
   text-decoration: none;
   font-size: 14px;
   transition: color 0.3s ease;
@@ -211,6 +194,7 @@
   display: flex;
   align-items: center;
   margin: auto;
+  margin-top: 50px;
 }
 
 /* Media Queries para Responsividade */
@@ -247,7 +231,7 @@
 }
 
 .logo {
-  background-image: url('../../../assets/images/logo.png');
+  background-image: url("../../../assets/images/logo.png");
   background-repeat: no-repeat;
   background-size: contain;
   width: 50%;
@@ -266,5 +250,14 @@ input[type="date"]:valid::-webkit-datetime-edit-text,
 input[type="date"]:valid::-webkit-datetime-edit-year-field,
 input[type="date"]:valid::-webkit-datetime-edit-month-field,
 input[type="date"]:valid::-webkit-datetime-edit-day-field {
-  color:#26606B; /* Altera a cor para visível (preto) após selecionar a data */
+  color: #26606b; /* Altera a cor para visível (preto) após selecionar a data */
+}
+
+.share {
+  width: 50%;
+}
+
+.double-information {
+  display: flex;
+  gap: 10px;
 }
