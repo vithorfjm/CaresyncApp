@@ -156,6 +156,12 @@
   margin: 100px auto 30px;
 }
 
+.button{
+  display: flex;
+  transform: translateX(100%) ;
+  position: absolute;
+}
+
 .register{
   margin: 30px auto 5px;
 }

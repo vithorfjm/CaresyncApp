@@ -12,6 +12,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { AuthContainerComponent } from './componentes/auth-container/auth-container.component';
 import { CadastroComponent } from './componentes/cadastro/cadastro.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { CadastroComponent } from './componentes/cadastro/cadastro.component';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    ReactiveFormsModule
   ],
   providers: [
     provideAnimationsAsync()

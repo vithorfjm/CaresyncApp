@@ -5,15 +5,18 @@
         <h1 class="titulo">LOGIN</h1>
       </div>
       <div class="labels">
+        <form [formGroup]="formulario">
         <div class="input-container">
-          <input type="mail" required="" />
-          <label>Usuário</label>
+          <input formControlName="email" type="mail" required=""/>
+          <label>E-mail</label>
         </div>
         <br />
+        
         <div class="input-container">
-          <input type="password" required="" />
+          <input formControlName="senha" type="password" required=""/>
           <label>Senha</label>
         </div>
+       </form> 
         <button class="submit-button">ENTRAR</button>
         <div class="link-container">
           <a href="#" class="link">Esqueci a senha</a>
