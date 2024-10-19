@@ -10,10 +10,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import ucb.CaresyncApp.DTOs.LoginRequestDTO;
+import ucb.CaresyncApp.DTOs.RegisterRequestDTO;
 import ucb.CaresyncApp.DTOs.TokenReponseDTO;
 import ucb.CaresyncApp.entities.User;
 import ucb.CaresyncApp.repositories.UserRepository;
 import ucb.CaresyncApp.services.TokenService;
+
+import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/auth")
@@ -37,5 +40,21 @@ public class AuthController {
         var tokenJWT = tokenService.generateToken((User) authentication.getPrincipal());
         return ResponseEntity.ok(new TokenReponseDTO(tokenJWT));
     }
+
+    @PostMapping("/cadastro")
+    public ResponseEntity register(@RequestBody @Valid RegisterRequestDTO data) {
+        User newUser = new User();
+        newUser.setAdmin(false);
+        newUser.setFirstName(data.firstName());
+        newUser.setLastName(data.lastName());
+        newUser.setEmail(data.email());
+        newUser.setPassword(passwordEncoder.encode(data.password()));
+        newUser.setCreatedAt(LocalDateTime.now());
+        newUser.setUpdatedAt(LocalDateTime.now());
+        newUser.setRole("patient");
+        userRepository.save(newUser);
+        return ResponseEntity.ok().build();
+    }
+
 
 }
