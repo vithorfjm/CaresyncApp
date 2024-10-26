@@ -3,7 +3,7 @@ package ucb.CaresyncApp.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import ucb.CaresyncApp.DTOs.RegisterRequestDTO;
+import ucb.CaresyncApp.DTOs.CadastroRequestDTO;
 import ucb.CaresyncApp.entities.User;
 import ucb.CaresyncApp.repositories.UserRepository;
 
@@ -31,7 +31,7 @@ public class UserService {
         return true;
     }
 
-    public void criarUsuario(RegisterRequestDTO dados) {
+    public void criarUsuario(CadastroRequestDTO dados) {
         User newUser = new User();
         newUser.setAdmin(false);
         newUser.setFirstName(dados.nome());
