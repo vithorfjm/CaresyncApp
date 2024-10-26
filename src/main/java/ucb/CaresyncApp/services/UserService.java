@@ -59,19 +59,19 @@ public class UserService {
     }
 
     private User validarDadosEdicao(User user, EdicaoUserRequestDTO dados) {
-        if (dados.nome() != null && !dados.nome().equals(""))
+        if (dados.nome() != null && !dados.nome().isEmpty())
             user.setFirstName(dados.nome());
-        if (dados.sobrenome() != null && !dados.sobrenome().equals(""))
+        if (dados.sobrenome() != null && !dados.sobrenome().isEmpty())
             user.setLastName(dados.sobrenome());
-        if (dados.CEP() != null && !dados.CEP().equals(""))
+        if (dados.CEP() != null && !dados.CEP().isEmpty())
             user.setCEP(dados.CEP());
-        if (dados.endereco() != null && !dados.endereco().equals(""))
+        if (dados.endereco() != null && !dados.endereco().isEmpty())
             user.setEndereco(dados.endereco());
-        if (dados.cidade() != null && !dados.cidade().equals(""))
+        if (dados.cidade() != null && !dados.cidade().isEmpty())
             user.setCidade(dados.cidade());
-        if (dados.UF() != null && !dados.UF().equals(""))
+        if (dados.UF() != null && !dados.UF().isEmpty())
             user.setUF(dados.UF());
-        if (dados.telefone() != null && !dados.telefone().equals(""))
+        if (dados.telefone() != null && !dados.telefone().isEmpty())
             user.setTelefone(dados.telefone());
 
         return user;
