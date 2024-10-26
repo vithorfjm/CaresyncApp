@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ucb.CaresyncApp.DTOs.CadastroRequestDTO;
+import ucb.CaresyncApp.DTOs.EdicaoUserRequestDTO;
 import ucb.CaresyncApp.entities.User;
 import ucb.CaresyncApp.repositories.UserRepository;
 
@@ -27,8 +28,9 @@ public class UserService {
         return repository.findAll();
     }
 
-    public boolean editarUsuario(User user) {
-        return true;
+    public void editarUsuario(User usuarioAtual, EdicaoUserRequestDTO novosDados) {
+        User usuarioAtualizado = validarDadosEdicao(usuarioAtual, novosDados);
+        repository.save(usuarioAtualizado);
     }
 
     public void criarUsuario(CadastroRequestDTO dados) {
@@ -54,6 +56,25 @@ public class UserService {
 
     public User listarUsuarioPorId(Long id) {
         return repository.findById(id).orElse(null);
+    }
+
+    private User validarDadosEdicao(User user, EdicaoUserRequestDTO dados) {
+        if (dados.nome() != null && !dados.nome().equals(""))
+            user.setFirstName(dados.nome());
+        if (dados.sobrenome() != null && !dados.sobrenome().equals(""))
+            user.setLastName(dados.sobrenome());
+        if (dados.CEP() != null && !dados.CEP().equals(""))
+            user.setCEP(dados.CEP());
+        if (dados.endereco() != null && !dados.endereco().equals(""))
+            user.setEndereco(dados.endereco());
+        if (dados.cidade() != null && !dados.cidade().equals(""))
+            user.setCidade(dados.cidade());
+        if (dados.UF() != null && !dados.UF().equals(""))
+            user.setUF(dados.UF());
+        if (dados.telefone() != null && !dados.telefone().equals(""))
+            user.setTelefone(dados.telefone());
+
+        return user;
     }
 
 }
