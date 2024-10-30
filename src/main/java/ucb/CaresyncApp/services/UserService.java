@@ -5,6 +5,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ucb.CaresyncApp.DTOs.CadastroRequestDTO;
 import ucb.CaresyncApp.DTOs.EdicaoUserRequestDTO;
+import ucb.CaresyncApp.DTOs.UsuarioResponseDTO;
 import ucb.CaresyncApp.entities.User;
 import ucb.CaresyncApp.repositories.UserRepository;
 
@@ -73,8 +74,23 @@ public class UserService {
             user.setUF(dados.UF());
         if (dados.telefone() != null && !dados.telefone().isEmpty())
             user.setTelefone(dados.telefone());
-
         return user;
+    }
+
+    public UsuarioResponseDTO listarUsuarioPeloToken(User user) {
+        return new UsuarioResponseDTO(
+                user.getFirstName(),
+                user.getLastName(),
+                user.getEmail(),
+                user.getCPF(),
+                user.getSexo(),
+                user.getTelefone(),
+                user.getCEP(),
+                user.getEndereco(),
+                user.getCidade(),
+                user.getUF(),
+                user.getDataNascimento()
+        );
     }
 
 }

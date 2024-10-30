@@ -22,4 +22,10 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping
+    public ResponseEntity listarUsuario (@AuthenticationPrincipal User user) {
+        var response = userService.listarUsuarioPeloToken(user);
+        return ResponseEntity.ok().body(response);
+    }
+
 }
