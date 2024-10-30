@@ -13,6 +13,7 @@ public record UsuarioResponseDTO(
         String endereco,
         String cidade,
         String UF,
-        LocalDate dataNascimento
+        LocalDate dataNascimento,
+        String numeroSUS
 ) {
 }

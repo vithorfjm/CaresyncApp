@@ -52,6 +52,7 @@ public class UserService {
         newUser.setCidade(dados.cidade());
         newUser.setUF(dados.UF());
         newUser.setTelefone(dados.telefone());
+        newUser.setNumeroSUS(dados.numeroSUS());
         repository.save(newUser);
     }
 
@@ -89,7 +90,8 @@ public class UserService {
                 user.getEndereco(),
                 user.getCidade(),
                 user.getUF(),
-                user.getDataNascimento()
+                user.getDataNascimento(),
+                user.getNumeroSUS()
         );
     }
 

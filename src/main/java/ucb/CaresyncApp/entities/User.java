@@ -50,6 +50,7 @@ public class User implements UserDetails {
     private String cidade;
     private String UF;
     private LocalDate dataNascimento;
+    private String numeroSUS;
 
     public Long getId() {
         return id;
@@ -215,5 +216,13 @@ public class User implements UserDetails {
 
     public void setDataNascimento(LocalDate dataNascimento) {
         this.dataNascimento = dataNascimento;
+    }
+
+    public String getNumeroSUS() {
+        return numeroSUS;
+    }
+
+    public void setNumeroSUS(String numeroSUS) {
+        this.numeroSUS = numeroSUS;
     }
 }

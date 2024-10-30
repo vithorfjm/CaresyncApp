@@ -27,12 +27,15 @@ public record CadastroRequestDTO(
         @NotBlank
         String cidade,
         @NotBlank
-        @Size(min = 2, max = 2)
+        @Size(min = 2, max = 2, message = "deve ter o tamanho igual a 2")
         String UF,
         @NotBlank
         String telefone,
         @NotBlank
         String email,
         @NotBlank
-        String senha
+        String senha,
+        @NotBlank
+        @Size(min = 15, max = 15, message = "deve ter o tamanho igual a 15")
+        String numeroSUS
 ){}
