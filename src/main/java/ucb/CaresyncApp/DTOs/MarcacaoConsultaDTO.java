@@ -5,7 +5,9 @@ import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 public record MarcacaoConsultaDTO(
         @NotBlank
@@ -18,8 +20,8 @@ public record MarcacaoConsultaDTO(
         String local,
         String observacoes,
         @NotNull
-        Long medicoId,
-        @NotNull
         @FutureOrPresent
-        LocalDateTime data) {
+        LocalDate data,
+        @NotNull
+        LocalTime hora) {
 }

@@ -6,8 +6,12 @@ import ucb.CaresyncApp.DTOs.ConsultaResponseDTO;
 import ucb.CaresyncApp.DTOs.MarcacaoConsultaDTO;
 import ucb.CaresyncApp.entities.Consulta;
 import ucb.CaresyncApp.entities.User;
+import ucb.CaresyncApp.exceptions.custom.DataForaDoLimiteException;
 import ucb.CaresyncApp.repositories.ConsultaRepository;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @Service
@@ -20,15 +24,24 @@ public class ConsultaService {
     private UserService userService;
 
     public ConsultaResponseDTO marcarConsulta(MarcacaoConsultaDTO dados, User paciente) {
-        var medico = userService.listarUsuarioPorId(dados.medicoId());
+
+        if (dados.data().isAfter(LocalDate.now().plusMonths(3))) {
+            throw new DataForaDoLimiteException();
+        }
+
+        if (dados.hora().isBefore(LocalTime.of(9, 0)) || dados.hora().isAfter(LocalTime.of(20, 00))) {
+            throw new DataForaDoLimiteException("A hora selecionada deve estar entre 09:00 e 20:00.");
+        }
+
+        var medico = userService.listarMedicoALeatorioPelaEspecialidade(dados.especialidade());
 
         Consulta novaConsulta = new Consulta();
-        novaConsulta.setDataConsulta(dados.data());
+        novaConsulta.setDataConsulta(dados.data().atTime(dados.hora()));
         novaConsulta.setPaciente(paciente);
         novaConsulta.setMedico(medico);
         novaConsulta.setStatus("Agendada");
         novaConsulta.setEspecialidade(dados.especialidade());
-        novaConsulta.setLocal(dados.especialidade());
+        novaConsulta.setLocal(dados.local());
         novaConsulta.setEndereco(dados.endereco());
         novaConsulta.setTipo(dados.tipo());
         novaConsulta.setObservacoes(dados.observacoes());
@@ -37,7 +50,7 @@ public class ConsultaService {
         var response = new ConsultaResponseDTO(
                 paciente.getFirstName() + " " + paciente.getLastName(),
                 medico.getFirstName() + " " + medico.getLastName(),
-                dados.data(),
+                dados.data().atTime(dados.hora()),
                 "Agendada",
                 dados.tipo(),
                 dados.especialidade(),

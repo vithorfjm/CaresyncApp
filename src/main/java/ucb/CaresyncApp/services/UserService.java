@@ -1,5 +1,6 @@
 package ucb.CaresyncApp.services;
 
+import org.aspectj.weaver.ast.Var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -7,10 +8,12 @@ import ucb.CaresyncApp.DTOs.CadastroRequestDTO;
 import ucb.CaresyncApp.DTOs.EdicaoUserRequestDTO;
 import ucb.CaresyncApp.DTOs.UsuarioResponseDTO;
 import ucb.CaresyncApp.entities.User;
+import ucb.CaresyncApp.exceptions.custom.MedicoIndisponivelException;
 import ucb.CaresyncApp.repositories.UserRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Random;
 
 @Service
 public class UserService {
@@ -61,10 +64,8 @@ public class UserService {
     }
 
     private User validarDadosEdicao(User user, EdicaoUserRequestDTO dados) {
-        if (dados.nome() != null && !dados.nome().isEmpty())
-            user.setFirstName(dados.nome());
-        if (dados.sobrenome() != null && !dados.sobrenome().isEmpty())
-            user.setLastName(dados.sobrenome());
+        if (dados.email() != null && !dados.email().isEmpty())
+            user.setEmail(dados.email());
         if (dados.CEP() != null && !dados.CEP().isEmpty())
             user.setCEP(dados.CEP());
         if (dados.endereco() != null && !dados.endereco().isEmpty())
@@ -95,4 +96,13 @@ public class UserService {
         );
     }
 
+    public User listarMedicoALeatorioPelaEspecialidade(String especialidade) {
+        var medicos = repository.findByRole(especialidade);
+
+        if (medicos.isEmpty())
+            throw new MedicoIndisponivelException(especialidade);
+
+        Random r = new Random();
+        return medicos.get(r.nextInt(medicos.size()));
+    }
 }
