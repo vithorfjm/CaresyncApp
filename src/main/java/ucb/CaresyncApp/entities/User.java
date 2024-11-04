@@ -51,6 +51,7 @@ public class User implements UserDetails {
     private String UF;
     private LocalDate dataNascimento;
     private String numeroSUS;
+    private String especialidade;
 
     public Long getId() {
         return id;
@@ -224,5 +225,13 @@ public class User implements UserDetails {
 
     public void setNumeroSUS(String numeroSUS) {
         this.numeroSUS = numeroSUS;
+    }
+
+    public String getEspecialidade() {
+        return especialidade;
+    }
+
+    public void setEspecialidade(String especialidade) {
+        this.especialidade = especialidade;
     }
 }

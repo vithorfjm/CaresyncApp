@@ -97,7 +97,7 @@ public class UserService {
     }
 
     public User listarMedicoALeatorioPelaEspecialidade(String especialidade) {
-        var medicos = repository.findByRole(especialidade);
+        var medicos = repository.findByEspecialidade(especialidade);
 
         if (medicos.isEmpty())
             throw new MedicoIndisponivelException(especialidade);
