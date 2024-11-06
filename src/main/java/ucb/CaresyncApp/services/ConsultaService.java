@@ -12,6 +12,7 @@ import ucb.CaresyncApp.repositories.ConsultaRepository;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -35,29 +36,9 @@ public class ConsultaService {
 
         var medico = userService.listarMedicoALeatorioPelaEspecialidade(dados.especialidade());
 
-        Consulta novaConsulta = new Consulta();
-        novaConsulta.setDataConsulta(dados.data().atTime(dados.hora()));
-        novaConsulta.setPaciente(paciente);
-        novaConsulta.setMedico(medico);
-        novaConsulta.setStatus("Agendada");
-        novaConsulta.setEspecialidade(dados.especialidade());
-        novaConsulta.setLocal(dados.local());
-        novaConsulta.setEndereco(dados.endereco());
-        novaConsulta.setTipo(dados.tipo());
-        novaConsulta.setObservacoes(dados.observacoes());
+        Consulta novaConsulta = new Consulta(dados, paciente, medico);
         repository.save(novaConsulta);
-
-        var response = new ConsultaResponseDTO(
-                paciente.getFirstName() + " " + paciente.getLastName(),
-                medico.getFirstName() + " " + medico.getLastName(),
-                dados.data().atTime(dados.hora()),
-                "Agendada",
-                dados.tipo(),
-                dados.especialidade(),
-                dados.local(),
-                dados.endereco(),
-                dados.observacoes());
-        return response;
+        return new ConsultaResponseDTO(novaConsulta);
     }
 
     public boolean confirmarConsulta() {
@@ -72,8 +53,14 @@ public class ConsultaService {
         return true;
     }
 
-    public List<Consulta> listarConsultasPorPacienteId(Long id) {
-        return null;
+    public List<ConsultaResponseDTO> listarConsultasPorPaciente(User user) {
+        List<Consulta> consultas = repository.findConsultaByPacienteId(user.getId());
+        List<ConsultaResponseDTO> listaResponse = new ArrayList<>();
+        for (Consulta consulta : consultas) {
+            var response = new ConsultaResponseDTO(consulta);
+            listaResponse.add(response);
+        }
+        return listaResponse;
     }
 
     public List<Consulta> listarConsultasPorMedicoId(Long id) {

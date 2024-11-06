@@ -1,6 +1,7 @@
 package ucb.CaresyncApp.entities;
 
 import jakarta.persistence.*;
+import ucb.CaresyncApp.DTOs.MarcacaoConsultaDTO;
 
 import java.time.LocalDateTime;
 
@@ -34,6 +35,22 @@ public class Consulta {
 
     @Column(name="data")
     private LocalDateTime dataConsulta;
+
+    public Consulta() {
+    }
+
+    public Consulta(MarcacaoConsultaDTO dto, User paciente, User medico) {
+        this.dataConsulta = dto.data().atTime(dto.hora());
+        this.paciente = paciente;
+        this.medico = medico;
+        this.status = "Agendada";
+        this.especialidade = dto.especialidade();
+        this.local = dto.local();
+        this.endereco = dto.endereco();
+        this.tipo = dto.tipo();
+        this.observacoes = dto.observacoes();
+    }
+
 
     public Long getId() {
         return id;

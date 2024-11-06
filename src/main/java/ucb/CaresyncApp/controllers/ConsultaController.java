@@ -4,14 +4,15 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import ucb.CaresyncApp.DTOs.ConsultaResponseDTO;
 import ucb.CaresyncApp.DTOs.MarcacaoConsultaDTO;
 import ucb.CaresyncApp.entities.User;
+import ucb.CaresyncApp.repositories.ConsultaRepository;
 import ucb.CaresyncApp.services.ConsultaService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/consulta")
@@ -19,6 +20,7 @@ public class ConsultaController {
 
     @Autowired
     private ConsultaService consultaService;
+    private ConsultaRepository consultaRepository;
 
     @PostMapping("/teste")
     public String teste(@AuthenticationPrincipal User user) {
@@ -26,11 +28,16 @@ public class ConsultaController {
         return user.getEmail();
     }
 
-    @PostMapping("/marcar")
-    public ResponseEntity marcarConsulta(@AuthenticationPrincipal User user, @RequestBody @Valid MarcacaoConsultaDTO consulta) {
+    @PostMapping("/agendar")
+    public ResponseEntity<ConsultaResponseDTO> marcarConsulta(@AuthenticationPrincipal User user, @RequestBody @Valid MarcacaoConsultaDTO consulta) {
         var novaConsulta = consultaService.marcarConsulta(consulta, user);
         return ResponseEntity.ok(novaConsulta);
+    }
 
+    @GetMapping("/listar-consultas")
+    public ResponseEntity<List<ConsultaResponseDTO>> listarConsultasDoPaciente(@AuthenticationPrincipal User user) {
+        var listaConsultas = consultaService.listarConsultasPorPaciente(user);
+        return ResponseEntity.ok().body(listaConsultas);
     }
 
 }
