@@ -1,5 +1,7 @@
 package ucb.CaresyncApp.DTOs;
 
+import ucb.CaresyncApp.entities.User;
+
 import java.time.LocalDate;
 
 public record UsuarioResponseDTO(
@@ -16,4 +18,20 @@ public record UsuarioResponseDTO(
         LocalDate dataNascimento,
         String numeroSUS
 ) {
+    public UsuarioResponseDTO(User usuario) {
+        this(
+            usuario.getFirstName(),
+            usuario.getLastName(),
+            usuario.getEmail(),
+            usuario.getCPF(),
+            usuario.getSexo(),
+            usuario.getTelefone(),
+            usuario.getCEP(),
+            usuario.getEndereco(),
+            usuario.getCidade(),
+            usuario.getUF(),
+            usuario.getDataNascimento(),
+            usuario.getNumeroSUS()
+        );
+    }
 }

@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import ucb.CaresyncApp.DTOs.CadastroRequestDTO;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -52,6 +54,29 @@ public class User implements UserDetails {
     private LocalDate dataNascimento;
     private String numeroSUS;
     private String especialidade;
+
+    public User() {
+    }
+
+    public User(CadastroRequestDTO dados, PasswordEncoder passwordEncoder) {
+        this.isAdmin = false;
+        this.firstName = dados.nome();
+        this.lastName = dados.sobrenome();
+        this.email = dados.email();
+        this.password = passwordEncoder.encode(dados.senha());
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
+        this.role = "patient";
+        this.sexo = dados.sexo();
+        this.dataNascimento = dados.dataNascimento();
+        this.CPF = dados.CPF();
+        this.endereco = dados.endereco();
+        this.CEP = dados.CEP();
+        this.cidade = dados.cidade();
+        this.UF = dados.UF();
+        this.telefone = dados.telefone();
+        this.numeroSUS = dados.numeroSUS();
+    }
 
     public Long getId() {
         return id;

@@ -38,25 +38,8 @@ public class UserService {
     }
 
     public void criarUsuario(CadastroRequestDTO dados) {
-        User newUser = new User();
-        newUser.setAdmin(false);
-        newUser.setFirstName(dados.nome());
-        newUser.setLastName(dados.sobrenome());
-        newUser.setEmail(dados.email());
-        newUser.setPassword(passwordEncoder.encode(dados.senha()));
-        newUser.setCreatedAt(LocalDateTime.now());
-        newUser.setUpdatedAt(LocalDateTime.now());
-        newUser.setRole("patient");
-        newUser.setSexo(dados.sexo());
-        newUser.setDataNascimento(dados.dataNascimento());
-        newUser.setCPF(dados.CPF());
-        newUser.setEndereco(dados.endereco());
-        newUser.setCEP(dados.CEP());
-        newUser.setCidade(dados.cidade());
-        newUser.setUF(dados.UF());
-        newUser.setTelefone(dados.telefone());
-        newUser.setNumeroSUS(dados.numeroSUS());
-        repository.save(newUser);
+        User novoUsuario = new User(dados, passwordEncoder);
+        repository.save(novoUsuario);
     }
 
     public User listarUsuarioPorId(Long id) {
@@ -80,20 +63,7 @@ public class UserService {
     }
 
     public UsuarioResponseDTO listarUsuarioPeloToken(User user) {
-        return new UsuarioResponseDTO(
-                user.getFirstName(),
-                user.getLastName(),
-                user.getEmail(),
-                user.getCPF(),
-                user.getSexo(),
-                user.getTelefone(),
-                user.getCEP(),
-                user.getEndereco(),
-                user.getCidade(),
-                user.getUF(),
-                user.getDataNascimento(),
-                user.getNumeroSUS()
-        );
+        return new UsuarioResponseDTO(user);
     }
 
     public User listarMedicoALeatorioPelaEspecialidade(String especialidade) {
