@@ -51,7 +51,9 @@ public class User implements UserDetails {
     private String endereco;
     private String cidade;
     private String UF;
+    @Column(name = "nascimento")
     private LocalDate dataNascimento;
+    @Column(name = "nr_sus")
     private String numeroSUS;
     private String especialidade;
 
