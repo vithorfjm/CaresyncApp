@@ -80,6 +80,6 @@ public class RestExceptionHandler {
     @ExceptionHandler(MedicoIndisponivelException.class)
     private ResponseEntity<ErrorResponseDTO> medicoIndisponivel(MedicoIndisponivelException ex) {
         var respostaTratada = new ErrorResponseDTO(HttpStatus.NOT_FOUND, ex.getMessage());
-        return ResponseEntity.badRequest().body(respostaTratada);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(respostaTratada);
     }
 }
