@@ -10,7 +10,7 @@ public record ConsultaResponseDTO(
         @JsonProperty("id_consulta") Long id,
         String nomePaciente,
         String nomeMedico,
-        LocalDate data,
+        LocalDate dataConsulta,
         LocalTime hora,
         String status,
         String tipo,

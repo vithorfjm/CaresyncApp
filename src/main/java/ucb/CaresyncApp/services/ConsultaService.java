@@ -26,7 +26,7 @@ public class ConsultaService {
 
     public ConsultaResponseDTO marcarConsulta(MarcacaoConsultaDTO dados, User paciente) {
 
-        if (dados.data().isAfter(LocalDate.now().plusMonths(3))) {
+        if (dados.dataConsulta().isAfter(LocalDate.now().plusMonths(3))) {
             throw new DataForaDoLimiteException();
         }
 

@@ -40,7 +40,7 @@ public class Consulta {
     }
 
     public Consulta(MarcacaoConsultaDTO dto, User paciente, User medico) {
-        this.dataConsulta = dto.data().atTime(dto.hora());
+        this.dataConsulta = dto.dataConsulta().atTime(dto.hora());
         this.paciente = paciente;
         this.medico = medico;
         this.status = "Agendada";

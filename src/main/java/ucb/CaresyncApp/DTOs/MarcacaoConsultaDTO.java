@@ -21,7 +21,7 @@ public record MarcacaoConsultaDTO(
         String observacoes,
         @NotNull
         @FutureOrPresent
-        LocalDate data,
+        LocalDate dataConsulta,
         @NotNull
         LocalTime hora) {
 }
