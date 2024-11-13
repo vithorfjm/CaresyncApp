@@ -40,4 +40,10 @@ public class ConsultaController {
         return ResponseEntity.ok().body(listaConsultas);
     }
 
+    @GetMapping("/listar-consultas/{id}")
+    public ResponseEntity<ConsultaResponseDTO> listarConsultaPeloId(@AuthenticationPrincipal User user, @PathVariable Long id) {
+        var consulta = consultaService.listarConsultaPeloId(id, user);
+        return ResponseEntity.ok().body(consulta);
+    }
+
 }

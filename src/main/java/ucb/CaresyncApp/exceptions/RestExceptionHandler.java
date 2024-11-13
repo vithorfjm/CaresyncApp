@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+import ucb.CaresyncApp.exceptions.custom.ConsultaNaoEncontradaException;
+import ucb.CaresyncApp.exceptions.custom.ConsultaNaoPertenceAoPacienteException;
 import ucb.CaresyncApp.exceptions.custom.DataForaDoLimiteException;
 import ucb.CaresyncApp.exceptions.custom.MedicoIndisponivelException;
 
@@ -81,5 +83,17 @@ public class RestExceptionHandler {
     private ResponseEntity<ErrorResponseDTO> medicoIndisponivel(MedicoIndisponivelException ex) {
         var respostaTratada = new ErrorResponseDTO(HttpStatus.NOT_FOUND, ex.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(respostaTratada);
+    }
+
+    @ExceptionHandler(ConsultaNaoEncontradaException.class)
+    private ResponseEntity<ErrorResponseDTO> consultaNaoEncontrada(ConsultaNaoEncontradaException ex) {
+        var respostaTratada = new ErrorResponseDTO(HttpStatus.NOT_FOUND, ex.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(respostaTratada);
+    }
+
+    @ExceptionHandler(ConsultaNaoPertenceAoPacienteException.class)
+    private ResponseEntity<ErrorResponseDTO> consultaNaoPertenceAoPaciente(ConsultaNaoPertenceAoPacienteException ex) {
+        var respostaTratada = new ErrorResponseDTO(HttpStatus.FORBIDDEN, ex.getMessage());
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(respostaTratada);
     }
 }

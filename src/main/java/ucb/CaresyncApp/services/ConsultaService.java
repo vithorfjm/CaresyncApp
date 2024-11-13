@@ -6,6 +6,8 @@ import ucb.CaresyncApp.DTOs.ConsultaResponseDTO;
 import ucb.CaresyncApp.DTOs.MarcacaoConsultaDTO;
 import ucb.CaresyncApp.entities.Consulta;
 import ucb.CaresyncApp.entities.User;
+import ucb.CaresyncApp.exceptions.custom.ConsultaNaoEncontradaException;
+import ucb.CaresyncApp.exceptions.custom.ConsultaNaoPertenceAoPacienteException;
 import ucb.CaresyncApp.exceptions.custom.DataForaDoLimiteException;
 import ucb.CaresyncApp.repositories.ConsultaRepository;
 
@@ -63,7 +65,14 @@ public class ConsultaService {
         return listaResponse;
     }
 
-    public List<Consulta> listarConsultasPorMedicoId(Long id) {
-        return null;
+    public ConsultaResponseDTO listarConsultaPeloId(Long id, User user) {
+        var consulta = repository.findById(id).orElseThrow(() -> new ConsultaNaoEncontradaException("Não existe consulta cadastrada com o id " + id));
+
+        if (consulta.getPaciente().getId() != user.getId()) {
+            throw new ConsultaNaoPertenceAoPacienteException("A consulta de id " + id + " não pertence ao paciente " + user.getFirstName() + " " + user.getLastName());
+        }
+
+        return new ConsultaResponseDTO(consulta);
     }
+
 }
