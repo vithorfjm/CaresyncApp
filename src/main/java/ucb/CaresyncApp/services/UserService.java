@@ -66,9 +66,8 @@ public class UserService {
         return new UsuarioResponseDTO(user);
     }
 
-    public User listarMedicoALeatorioPelaEspecialidade(String especialidade) {
-        var medicos = repository.findByEspecialidade(especialidade);
-
+    public User listarMedicoALeatorioPelaEspecialidade(String especialidade, LocalDateTime data) {
+        var medicos = repository.findMedicosDisponiveisPorEspecialidadeEData(especialidade, data, data.minusMinutes(19));
         if (medicos.isEmpty())
             throw new MedicoIndisponivelException(especialidade);
 

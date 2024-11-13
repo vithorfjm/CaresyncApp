@@ -14,4 +14,10 @@ import java.util.List;
 public interface UserRepository extends JpaRepository<User, Long> {
     UserDetails findByEmail(String email);
     List<User> findByEspecialidade(String especialidade);
+
+    @Query("SELECT u FROM User u WHERE u.especialidade = :especialidade AND u NOT IN " +
+            "(SELECT c.medico FROM Consulta c WHERE c.dataConsulta BETWEEN :dataAnterior AND :dataConsulta)")
+    List<User> findMedicosDisponiveisPorEspecialidadeEData(@Param("especialidade") String especialidade,
+                                                        @Param("dataConsulta") LocalDateTime dataConsulta,
+                                                        @Param("dataAnterior") LocalDateTime dataAnterior);
 }
