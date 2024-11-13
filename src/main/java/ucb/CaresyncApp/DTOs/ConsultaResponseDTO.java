@@ -17,7 +17,8 @@ public record ConsultaResponseDTO(
         String especialidade,
         String local,
         String endereco,
-        String observacoes) {
+        String observacoes,
+        LocalDate dataNascimento) {
 
 
     public ConsultaResponseDTO(Consulta consulta) {
@@ -32,7 +33,8 @@ public record ConsultaResponseDTO(
             consulta.getEspecialidade(),
             consulta.getLocal(),
             consulta.getEndereco(),
-            consulta.getObservacoes()
+            consulta.getObservacoes(),
+            consulta.getPaciente().getDataNascimento()
         );
     }
 }
