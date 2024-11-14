@@ -1,5 +1,6 @@
 package ucb.CaresyncApp.DTOs;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import ucb.CaresyncApp.entities.Consulta;
 
@@ -11,7 +12,7 @@ public record ConsultaResponseDTO(
         String nomePaciente,
         String nomeMedico,
         LocalDate dataConsulta,
-        LocalTime hora,
+        @JsonFormat(pattern = "HH:mm") LocalTime hora,
         String status,
         String tipo,
         String especialidade,
