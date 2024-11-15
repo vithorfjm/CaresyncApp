@@ -6,7 +6,7 @@ import ucb.CaresyncApp.DTOs.MarcacaoConsultaDTO;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "consultas")
+@Table(name = "agendamento_consultas")
 public class Consulta {
 
     @Id
