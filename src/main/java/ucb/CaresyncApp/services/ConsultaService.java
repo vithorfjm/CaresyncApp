@@ -36,7 +36,7 @@ public class ConsultaService {
             throw new DataForaDoLimiteException("A hora selecionada deve estar entre 09:00 e 20:00.");
         }
 
-        var medico = userService.listarMedicoALeatorioPelaEspecialidade(dados.especialidade(), dados.dataConsulta().atTime(dados.hora()));
+        var medico = userService.listarMedicoAleatorioPelaEspecialidadeParaConsulta(dados.especialidade(), dados.dataConsulta().atTime(dados.hora()));
 
         Consulta novaConsulta = new Consulta(dados, paciente, medico);
         repository.save(novaConsulta);

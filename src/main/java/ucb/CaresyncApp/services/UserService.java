@@ -11,7 +11,9 @@ import ucb.CaresyncApp.entities.User;
 import ucb.CaresyncApp.exceptions.custom.MedicoIndisponivelException;
 import ucb.CaresyncApp.repositories.UserRepository;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Random;
 
@@ -66,10 +68,19 @@ public class UserService {
         return new UsuarioResponseDTO(user);
     }
 
-    public User listarMedicoALeatorioPelaEspecialidade(String especialidade, LocalDateTime data) {
-        var medicos = repository.findMedicosDisponiveisPorEspecialidadeEData(especialidade, data.minusMinutes(19), data.plusMinutes(19));
+    public User listarMedicoAleatorioPelaEspecialidadeParaConsulta(String especialidade, LocalDateTime data) {
+        var medicos = repository.findMedicosDisponiveisParaConsultaPorEspecialidadeEData(especialidade, data.minusMinutes(19), data.plusMinutes(19));
         if (medicos.isEmpty())
             throw new MedicoIndisponivelException(especialidade);
+
+        Random r = new Random();
+        return medicos.get(r.nextInt(medicos.size()));
+    }
+
+    public User listarMedicoAleatorioPelaDataParaExame(LocalDateTime data) {
+        var medicos = repository.findMedicosDisponiveisParaExamePorData(data.minusMinutes(19), data.plusMinutes(19));
+        if (medicos.isEmpty())
+            throw new MedicoIndisponivelException();
 
         Random r = new Random();
         return medicos.get(r.nextInt(medicos.size()));
