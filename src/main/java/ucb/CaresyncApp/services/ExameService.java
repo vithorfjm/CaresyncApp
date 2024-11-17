@@ -42,7 +42,7 @@ public class ExameService {
 
         Exame novoExame = new Exame(dados, paciente, medico);
         exameRepository.save(novoExame);
-        return null;
+        return new ExameResponseDTO(novoExame);
     }
 
     public List<ExameResponseDTO> listarExamesDoUsuario(User user) {
