@@ -43,18 +43,6 @@ public class ConsultaService {
         return new ConsultaResponseDTO(novaConsulta);
     }
 
-    public boolean confirmarConsulta() {
-        return true;
-    }
-
-    public boolean cancelarConsulta() {
-        return true;
-    }
-
-    public boolean concluirConsulta() {
-        return true;
-    }
-
     public List<ConsultaResponseDTO> listarConsultasPorPaciente(User user) {
         List<Consulta> consultas = repository.findConsultaByPacienteId(user.getId());
         List<ConsultaResponseDTO> listaResponse = new ArrayList<>();
