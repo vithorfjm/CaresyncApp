@@ -26,14 +26,6 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public List<User> listarTodosOsMedicos () {
-        return repository.findAll();
-    }
-
-    public List<User> listarMedicosPorEspecialidade(String especialidade) {
-        return repository.findAll();
-    }
-
     public void editarUsuario(User usuarioAtual, EdicaoUserRequestDTO novosDados) {
         User usuarioAtualizado = validarDadosEdicao(usuarioAtual, novosDados);
         repository.save(usuarioAtualizado);
@@ -42,10 +34,6 @@ public class UserService {
     public void criarUsuario(CadastroRequestDTO dados) {
         User novoUsuario = new User(dados, passwordEncoder);
         repository.save(novoUsuario);
-    }
-
-    public User listarUsuarioPorId(Long id) {
-        return repository.findById(id).orElse(null);
     }
 
     private User validarDadosEdicao(User user, EdicaoUserRequestDTO dados) {
