@@ -10,18 +10,24 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import ucb.CaresyncApp.DTOs.ExameResponseDTO;
+import ucb.CaresyncApp.DTOs.MarcacaoExameDTO;
 import ucb.CaresyncApp.entities.Consulta;
 import ucb.CaresyncApp.entities.Exame;
 import ucb.CaresyncApp.entities.User;
 import ucb.CaresyncApp.exceptions.custom.ConsultaNaoEncontradaException;
 import ucb.CaresyncApp.exceptions.custom.ConsultaNaoPertenceAoPacienteException;
+import ucb.CaresyncApp.exceptions.custom.DataForaDoLimiteException;
 import ucb.CaresyncApp.repositories.ExameRepository;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 class ExameServiceTest {
@@ -127,6 +133,91 @@ class ExameServiceTest {
         });
     }
 
+    @Test
+    @DisplayName("Deve salvar o exame corretamente")
+    void criarExameCase1() {
+        var pacienteMock = criarUsuario(1L, "Vithor", "Félix", false);
+        var medicoMock = criarUsuario(2L, "Luiza", "Rodrigues",true);
+        var dataExame = LocalDate.now().plusDays(5);
+        var horaExame = LocalTime.of(10, 0);
+        var req = new MarcacaoExameDTO(
+                "Raio-x",
+                "UPA Taguatinga",
+                "CSD 10",
+                dataExame,
+                horaExame,
+                "");
+        when(userService.listarMedicoAleatorioPelaDataParaExame(dataExame.atTime(horaExame))).thenReturn(medicoMock);
+
+        when(exameRepository.save(any(Exame.class))).thenAnswer(invocation -> invocation.getArgument(0));
+
+        var exameMarcado = exameService.salvarExame(req, pacienteMock);
+
+        assertNotNull(exameMarcado);
+        assertEquals("Raio-x", exameMarcado.nomeExame());
+        assertEquals("UPA Taguatinga", exameMarcado.local());
+        assertEquals("CSD 10", exameMarcado.endereco());
+        assertEquals(dataExame, exameMarcado.data());
+        assertEquals(horaExame, exameMarcado.hora());
+    }
+
+    @Test
+    @DisplayName("Deve lançar um erro quando a data passada for superior a 3 meses a partir do dia atual")
+    void criarExameCase2() {
+        var pacienteMock = criarUsuario(1L, "Vithor", "Félix", false);
+        var dataExame = LocalDate.now().plusMonths(4);
+        var horaExame = LocalTime.of(10, 0);
+        var req = new MarcacaoExameDTO(
+                "Raio-x",
+                "UPA Taguatinga",
+                "CSD 10",
+                dataExame,
+                horaExame,
+                "");
+
+        assertThrows(DataForaDoLimiteException.class, () -> {
+            exameService.salvarExame(req, pacienteMock);
+        });
+    }
+
+    @Test
+    @DisplayName("Deve lançar um erro quando a hora passada for antes das 09:00")
+    void criarExameCase3() {
+        var pacienteMock = criarUsuario(1L, "Vithor", "Félix", false);
+        var dataExame = LocalDate.now().plusMonths(1);
+        var horaExame = LocalTime.of(8, 0);
+        var req = new MarcacaoExameDTO(
+                "Raio-x",
+                "UPA Taguatinga",
+                "CSD 10",
+                dataExame,
+                horaExame,
+                "");
+
+        assertThrows(DataForaDoLimiteException.class, () -> {
+            exameService.salvarExame(req, pacienteMock);
+        });
+    }
+
+    @Test
+    @DisplayName("Deve lançar um erro quando a hora passada for depois das 20:00")
+    void criarExameCase4() {
+        var pacienteMock = criarUsuario(1L, "Vithor", "Félix", false);
+        var dataExame = LocalDate.now().plusMonths(1);
+        var horaExame = LocalTime.of(20, 01);
+        var req = new MarcacaoExameDTO(
+                "Raio-x",
+                "UPA Taguatinga",
+                "CSD 10",
+                dataExame,
+                horaExame,
+                "");
+
+        assertThrows(DataForaDoLimiteException.class, () -> {
+            exameService.salvarExame(req, pacienteMock);
+        });
+    }
+
     private User criarUsuario(Long id, String firstName, String lastName, Boolean medico) {
         User newUser = new User();
         newUser.setId(id);
@@ -147,5 +238,6 @@ class ExameServiceTest {
         novoExame.setMedico(criarUsuario(3L, "Jorge", "Aragao", true));
         return novoExame;
     }
+
 
 }
