@@ -1,7 +1,6 @@
 package ucb.CaresyncApp.repositories;
 
 import jakarta.persistence.EntityManager;
-import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +18,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 @ActiveProfiles("test")
@@ -38,23 +37,49 @@ class UserRepositoryTest {
     PasswordEncoder passwordEncoder;
 
     @Test
-    @DisplayName("Deve retornar do banco de dados, uma lista de médicos de especialidade especifica que não tenham uma consulta marcada em até 20 minutos antes ou depois da hora passada")
+    @DisplayName("Deve retornar do banco de dados, uma lista contendo todos os médico da especialidade especifica que não tenham uma consulta marcada em até 20 minutos antes ou depois da hora passada")
     void findMedicosDisponiveisPorEspecialidadeEDataSuccess() {
         List<User> pacientesList = gerarPacientes();
         List<User> medicosList = gerarMedicos();
+        entityManager.flush();
+        entityManager.clear();
 
-        var consulta1 = criarConsulta(pacientesList.get(1), medicosList.get(1), LocalDateTime.of(2024, 12, 10, 12, 00)); // Paciente 1, medico 1, 12:00 - 10/12/2024
-        var consulta2 = criarConsulta(pacientesList.get(3), medicosList.get(0), LocalDateTime.of(2024, 12, 10, 12, 10)); // Paciente 3, medico 0, 12:10 - 10/12/2024
-        var consulta3 = criarConsulta(pacientesList.get(2), medicosList.get(2), LocalDateTime.of(2024, 12, 10, 12, 00)); // Paciente 2, medico 2, 12:00 - 10/12/2024
+        var consulta1 = criarConsulta(pacientesList.get(0), medicosList.get(0), LocalDateTime.of(2024, 12, 10, 12, 00)); // Paciente 1, medico 0, 12:00 - 10/12/2024
 
         LocalDateTime data = LocalDateTime.of(2024, 12, 10, 12, 10);
 
         List<User> result = this.userRepository.findMedicosDisponiveisParaConsultaPorEspecialidadeEData("Pediatria", data.minusMinutes(20), data.plusMinutes(20));
 
+        assertFalse(result.isEmpty());
+        assertEquals(2, result.size());
+        assertNotSame(result.get(0).getId(), medicosList.get(0).getId()); // garante que o id do 1º user do result nao seja o médico com consulta marcada (id 0)
+        assertNotSame(result.get(1).getId(), medicosList.get(0).getId()); // garante que o id do 2º user do result nao seja o médico com consulta marcada (id 0)
+
+    }
+
+    @Test
+    @DisplayName("Deve retornar do banco de dados, uma lista vazia de médicos quando todos os médicos estiverem ocupados com consultas na data específica")
+    void findMedicosDisponiveisPorEspecialidadeEDataFail() {
+        List<User> pacientesList = gerarPacientes();
+        List<User> medicosList = gerarMedicos();
+
+        var consulta1 = criarConsulta(pacientesList.get(1), medicosList.get(1), LocalDateTime.of(2024, 12, 10, 12, 00)); // Paciente 1, medico 1, 12:00 - 10/12/2024
+        var consulta2 = criarConsulta(pacientesList.get(3), medicosList.get(0), LocalDateTime.of(2024, 12, 10, 12, 10)); // Paciente 3, medico 0, 12:00 - 10/12/2024
+        var consulta3 = criarConsulta(pacientesList.get(2), medicosList.get(2), LocalDateTime.of(2024, 12, 10, 12, 00)); // Paciente 2, medico 2, 12:00 - 10/12/2024
+        entityManager.flush();
+        entityManager.clear();
+
+        LocalDateTime data = LocalDateTime.of(2024, 12, 10, 12, 00);
+        LocalDateTime vinteMinAntes = data.minusMinutes(20);
+        LocalDateTime vinteMinDepois = data.plusMinutes(20);
+
+        List<User> result = this.userRepository.findMedicosDisponiveisParaConsultaPorEspecialidadeEData("Pediatria", vinteMinAntes, vinteMinDepois);
+
         result.forEach(medico -> System.out.println("Médico: " + medico.getFirstName()));
 
-        assertThat(result.size() == 0).isTrue();
+        assertTrue(result.isEmpty());
     }
+
 
     private List<User> gerarPacientes() {
         var paciente1DTO = new CadastroRequestDTO("Luciana", "Pereira", "Feminino", LocalDate.of(1993, 11, 5), "654.321.987-00", "Quadra 45, Conjunto C", "23456-789", "Gama", "DF", "(61) 99567-8901", "luciana.pereira@gmail.com", "321", "712345678912349");
@@ -91,13 +116,13 @@ class UserRepositoryTest {
     }
 
 
-    private Consulta criarConsulta(User medico, User paciente, LocalDateTime data) {
+    private Consulta criarConsulta(User paciente, User medico, LocalDateTime data) {
         Consulta novaConsulta = new Consulta();
         novaConsulta.setMedico(medico);
         novaConsulta.setPaciente(paciente);
         novaConsulta.setDataConsulta(data);
         novaConsulta.setStatus("Agendada");
-        novaConsulta.setEspecialidade("Pediatria");
+        novaConsulta.setEspecialidade("Nutrição");
         novaConsulta.setTipo("Consulta");
         novaConsulta.setLocal("Clínica XYZ");
         novaConsulta.setEndereco("Rua ABC, 123");
