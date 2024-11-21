@@ -1,5 +1,6 @@
 package ucb.CaresyncApp.DTOs;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import ucb.CaresyncApp.entities.Exame;
 
@@ -10,7 +11,7 @@ public record ExameResponseDTO(
     @JsonProperty("id_exame") Long id,
     String nomeExame,
     LocalDate data,
-    LocalTime hora,
+    @JsonFormat(pattern = "HH:mm") LocalTime hora,
     String resultado,
     String local,
     String endereco,
