@@ -11,7 +11,7 @@ public record MarcacaoExameDTO(
     @NotBlank
     String nomeExame,
     @NotBlank
-    String localidade,
+    String local,
     @NotBlank
     String endereco,
     @NotNull

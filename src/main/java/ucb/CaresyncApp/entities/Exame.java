@@ -39,7 +39,7 @@ public class Exame {
     public Exame(MarcacaoExameDTO dados, User paciente, User medico) {
         this.nomeExame = dados.nomeExame();
         this.data = dados.data().atTime(dados.hora());
-        this.local = dados.localidade();
+        this.local = dados.local();
         this.endereco = dados.endereco();
         this.observacoes = dados.observacoes();
         this.paciente = paciente;
