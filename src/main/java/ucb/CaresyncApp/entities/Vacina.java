@@ -15,7 +15,9 @@ public class Vacina {
     private String nome;
     private LocalDateTime dataAplicacao;
     private LocalDate dataRetorno;
-    @Column(name = "localAplicacao")
+    private String lote;
+    private String laboratorio;
+    @Column(name = "unidade")
     private String localDeAplicacao;
     @Column(name = "statusVacina")
     private String status;
@@ -91,5 +93,21 @@ public class Vacina {
 
     public void setMedico(User medico) {
         this.medico = medico;
+    }
+
+    public String getLote() {
+        return lote;
+    }
+
+    public void setLote(String lote) {
+        this.lote = lote;
+    }
+
+    public String getLaboratorio() {
+        return laboratorio;
+    }
+
+    public void setLaboratorio(String laboratorio) {
+        this.laboratorio = laboratorio;
     }
 }
