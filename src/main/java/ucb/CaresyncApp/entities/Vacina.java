@@ -17,8 +17,7 @@ public class Vacina {
     private LocalDate dataRetorno;
     private String lote;
     private String laboratorio;
-    @Column(name = "unidade")
-    private String localDeAplicacao;
+    private String unidade;
     @Column(name = "statusVacina")
     private String status;
     @ManyToOne
@@ -63,12 +62,12 @@ public class Vacina {
         this.dataRetorno = dataRetorno;
     }
 
-    public String getLocalDeAplicacao() {
-        return localDeAplicacao;
+    public String getUnidade() {
+        return unidade;
     }
 
-    public void setLocalDeAplicacao(String localDeAplicacao) {
-        this.localDeAplicacao = localDeAplicacao;
+    public void setUnidade(String unidade) {
+        this.unidade = unidade;
     }
 
     public String getStatus() {
