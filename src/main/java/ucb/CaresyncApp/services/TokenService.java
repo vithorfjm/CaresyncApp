@@ -5,11 +5,11 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import org.springframework.stereotype.Service;
 import ucb.CaresyncApp.entities.User;
+import ucb.CaresyncApp.exceptions.custom.TokenExpiradoOuInvalidoException;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
-import java.util.Date;
 
 @Service
 public class TokenService {
@@ -38,7 +38,7 @@ public class TokenService {
                     .verify(token)
                     .getSubject();
         } catch (JWTVerificationException exception){
-            throw new RuntimeException("JWT token é inválido ou expirou", exception);
+            throw new TokenExpiradoOuInvalidoException();
         }
     }
 

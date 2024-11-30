@@ -1,32 +1,15 @@
 package ucb.CaresyncApp.exceptions;
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
-import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-import ucb.CaresyncApp.exceptions.custom.ConsultaNaoEncontradaException;
-import ucb.CaresyncApp.exceptions.custom.ConsultaNaoPertenceAoPacienteException;
-import ucb.CaresyncApp.exceptions.custom.DataForaDoLimiteException;
-import ucb.CaresyncApp.exceptions.custom.MedicoIndisponivelException;
+import ucb.CaresyncApp.exceptions.custom.*;
 
 import java.sql.SQLIntegrityConstraintViolationException;
-import java.time.format.DateTimeParseException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @RestControllerAdvice
 public class RestExceptionHandler {
@@ -95,5 +78,11 @@ public class RestExceptionHandler {
     private ResponseEntity<ErrorResponseDTO> consultaNaoPertenceAoPaciente(ConsultaNaoPertenceAoPacienteException ex) {
         var respostaTratada = new ErrorResponseDTO(HttpStatus.FORBIDDEN, ex.getMessage());
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(respostaTratada);
+    }
+
+    @ExceptionHandler(TokenExpiradoOuInvalidoException.class)
+    private ResponseEntity<ErrorResponseDTO> tokenExpiradoOuInvalido(TokenExpiradoOuInvalidoException ex) {
+        var respostaTratadoa = new ErrorResponseDTO(HttpStatus.UNAUTHORIZED, ex.getMessage());
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(respostaTratadoa);
     }
 }
