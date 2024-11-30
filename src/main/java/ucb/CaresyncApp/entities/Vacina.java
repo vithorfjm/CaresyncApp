@@ -12,13 +12,16 @@ public class Vacina {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "nome_vacina")
     private String nome;
+    @Column(name = "data_aplicacao")
     private LocalDateTime dataAplicacao;
+    @Column(name = "data_returno")
     private LocalDate dataRetorno;
     private String lote;
     private String laboratorio;
     private String unidade;
-    @Column(name = "statusVacina")
+    @Column(name = "status_vacina")
     private String status;
     @ManyToOne
     @JoinColumn(name = "paciente_id", referencedColumnName = "id")
