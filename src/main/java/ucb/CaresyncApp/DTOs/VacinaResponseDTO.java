@@ -7,29 +7,29 @@ import java.time.LocalTime;
 
 public record VacinaResponseDTO(Long id,
                                 String nomeVacina,
-                                LocalDate dataAplicacao,
-                                LocalTime horaAplicacao,
-                                LocalDate dataRetorno,
+                                String dataAplicacao,
+                                String horaAplicacao,
+                                String dataRetorno,
                                 String unidade,
                                 String lote,
                                 String laboratorio,
                                 String status,
                                 String nomePaciente,
-                                String nomeMedico) {
+                                String assinatura) {
 
     public VacinaResponseDTO(Vacina vacina) {
         this(
                 vacina.getId(),
                 vacina.getNome(),
-                vacina.getDataAplicacao().toLocalDate(),
-                vacina.getDataAplicacao().toLocalTime(),
-                vacina.getDataRetorno(),
+                vacina.getDataAplicacao() != null ? vacina.getDataAplicacao().toLocalDate().toString() : "",
+                vacina.getDataAplicacao() != null ? vacina.getDataAplicacao().toLocalTime().toString() : "",
+                vacina.getDataRetorno() != null ? vacina.getDataRetorno().toString() : "",
                 vacina.getUnidade(),
                 vacina.getLote(),
                 vacina.getLaboratorio(),
                 vacina.getStatus(),
                 vacina.getPaciente().getFirstName() + " " + vacina.getPaciente().getLastName(),
-                vacina.getMedico().getFirstName() + " " + vacina.getMedico().getLastName()
+                vacina.getMedico() != null ? vacina.getMedico().getFirstName() + " " + vacina.getMedico().getLastName() : ""
         );
     }
 
