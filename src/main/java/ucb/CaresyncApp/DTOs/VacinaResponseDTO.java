@@ -4,11 +4,11 @@ import ucb.CaresyncApp.entities.Vacina;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 public record VacinaResponseDTO(Long id,
                                 String nomeVacina,
                                 String dataAplicacao,
-                                String horaAplicacao,
                                 String dataRetorno,
                                 String unidade,
                                 String lote,
@@ -21,16 +21,20 @@ public record VacinaResponseDTO(Long id,
         this(
                 vacina.getId(),
                 vacina.getNome(),
-                vacina.getDataAplicacao() != null ? vacina.getDataAplicacao().toLocalDate().toString() : "",
-                vacina.getDataAplicacao() != null ? vacina.getDataAplicacao().toLocalTime().toString() : "",
-                vacina.getDataRetorno() != null ? vacina.getDataRetorno().toString() : "",
+                vacina.getDataAplicacao() != null
+                        ? vacina.getDataAplicacao().format(DateTimeFormatter.ofPattern("dd/MM/yyyy - HH:mm"))
+                        : "",
+                vacina.getDataRetorno() != null
+                        ? vacina.getDataRetorno().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+                        : "",
                 vacina.getUnidade(),
                 vacina.getLote(),
                 vacina.getLaboratorio(),
                 vacina.getStatus(),
                 vacina.getPaciente().getFirstName() + " " + vacina.getPaciente().getLastName(),
-                vacina.getMedico() != null ? vacina.getMedico().getFirstName() + " " + vacina.getMedico().getLastName() : ""
+                vacina.getMedico() != null
+                        ? vacina.getMedico().getFirstName() + " " + vacina.getMedico().getLastName()
+                        : ""
         );
     }
-
 }
