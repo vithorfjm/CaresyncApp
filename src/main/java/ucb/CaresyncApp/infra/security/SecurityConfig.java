@@ -43,6 +43,9 @@ public class SecurityConfig {
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeRequests(req -> {
                     req.requestMatchers("/auth/*").permitAll();
+                    req.requestMatchers("/esqueci-a-senha").permitAll();
+                    req.requestMatchers("/codigo").permitAll();
+                    req.requestMatchers("/alterar-senha").permitAll();
                     req.anyRequest().authenticated();
                 })
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)

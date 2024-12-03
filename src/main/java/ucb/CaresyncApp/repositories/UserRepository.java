@@ -15,6 +15,7 @@ import java.util.List;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
     UserDetails findByEmail(String email);
+    User findUserByEmail(String email);
     List<User> findByEspecialidade(String especialidade);
 
     @Query("SELECT u FROM User u WHERE u.especialidade = :especialidade AND u NOT IN " +
@@ -27,4 +28,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "(SELECT e.medico FROM Exame e WHERE e.data BETWEEN :horaAntes AND :horaDepois)")
     List<User> findMedicosDisponiveisParaExamePorData(@Param("horaAntes") LocalDateTime horaAntes,
                                                       @Param("horaDepois") LocalDateTime horaDepois);
+
+
+    Boolean existsByEmail(String email);
 }

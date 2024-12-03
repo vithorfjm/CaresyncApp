@@ -73,4 +73,21 @@ public class UserService {
         Random r = new Random();
         return medicos.get(r.nextInt(medicos.size()));
     }
+
+    public Boolean emailExiste(String email) {
+        return repository.existsByEmail(email);
+    }
+
+    public String pegarNomeDeUsuarioPeloEmail(String email) {
+        var usuario = repository.findUserByEmail(email);
+        return usuario.getFirstName() + " " + usuario.getLastName();
+    }
+
+    public void trocarDeSenha(String email, String novaSenha) {
+        var usuario = repository.findUserByEmail(email);
+        if (usuario != null) {
+            usuario.setPassword(passwordEncoder.encode(novaSenha));
+            repository.save(usuario);
+        }
+    }
 }
