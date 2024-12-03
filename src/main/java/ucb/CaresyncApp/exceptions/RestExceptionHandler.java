@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -82,7 +83,19 @@ public class RestExceptionHandler {
 
     @ExceptionHandler(TokenExpiradoOuInvalidoException.class)
     private ResponseEntity<ErrorResponseDTO> tokenExpiradoOuInvalido(TokenExpiradoOuInvalidoException ex) {
-        var respostaTratadoa = new ErrorResponseDTO(HttpStatus.UNAUTHORIZED, ex.getMessage());
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(respostaTratadoa);
+        var respostaTratada = new ErrorResponseDTO(HttpStatus.UNAUTHORIZED, ex.getMessage());
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(respostaTratada);
+    }
+
+    @ExceptionHandler(RuntimeException.class)
+    private ResponseEntity<ErrorResponseDTO> erroDoSistema(RuntimeException ex) {
+        var respostaTratada = new ErrorResponseDTO(HttpStatus.INTERNAL_SERVER_ERROR, "Erro interno do sistema - " + ex.getMessage());
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(respostaTratada);
+    }
+
+    @ExceptionHandler(BadCredentialsException.class)
+    private ResponseEntity<ErrorResponseDTO> erroDoSistema(BadCredentialsException ex) {
+        var respostaTratada = new ErrorResponseDTO(HttpStatus.UNAUTHORIZED, "Email ou senha estão incorretos");
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(respostaTratada);
     }
 }
